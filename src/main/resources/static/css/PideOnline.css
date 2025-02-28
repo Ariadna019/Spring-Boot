@@ -1,0 +1,110 @@
+.card {
+    /* width: 30rem; /* Aumenta el tamaño de la tarjeta */
+     /*transition: transform 0.3s ease-in-out; /* Efecto de transición */
+
+     border: none;
+border-radius: 10px;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+ }
+
+ .card:hover {
+     transform: scale(1.05); /* Aumenta el tamaño de la tarjeta cuando se pasa el cursor */
+     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+ }
+
+ .card-body {
+     padding: 1.5rem; /* Aumenta el espacio dentro de la tarjeta */
+ }
+
+ .card-title {
+     font-size: 50px; /* Aumenta el tamaño del título */
+     font-size: clamp(1rem, 2.5vw, 1.5rem); /* Ajusta según el tamaño de pantalla */
+ }
+
+ .card-text {
+     font-size: 20px; /* Aumenta el tamaño del texto de la descripción */
+ }
+
+ .precio {
+     font-size: 22px; /* Aumenta el tamaño del precio */
+ }
+
+ .card-img-top {
+     height: 40%; /* Ajusta la altura de la imagen */
+     width: 150%;
+     object-fit: cover;
+ }
+ .custom-title {
+font-family: 'Bahnschrift', sans-serif;
+font-weight: 600;
+color: #e98502;
+text-align: center;
+margin-bottom: 1.5rem;
+}
+.navbar-nav .nav-link:hover {
+color: #ffc107; /* Resaltar al pasar el mouse */
+transition: color 0.3s ease-in-out;
+}
+.btn-primary {
+background-color: #ff5722;
+border: none;
+transition: background-color 0.3s ease;
+}
+.btn-primary:hover {
+background-color: #1a52ec;
+}
+
+@media (max-width: 768px) {
+.navbar-brand {
+ font-size: 1.5rem;
+}
+.card-title {
+ font-size: 1.2rem;
+}
+.card-text {
+ font-size: 1rem;
+}
+}
+
+
+ /* Estilo adicional para hacer que los elementos del dropdown sean más grandes */
+ .dropdown-item { padding: 13px 13px; /* Espaciado adicional para mayor área de clic */}
+ .dropdown-toggle { font-size: 1.2rem; /* Aumenta el tamaño de la fuente del enlace */ }
+ .fas {    font-size: 1.5rem; /* Aumenta el tamaño del ícono de usuario */}
+ 
+
+
+
+@keyframes fadeIn {
+from {
+ opacity: 0;
+ transform: translateY(-20px);
+}
+to {
+ opacity: 1;
+ transform: translateY(0);
+}
+}
+
+/* Estilo para el footer */
+footer {
+    background-color: #000;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    padding: 1.7rem 0;
+    font-size: 18px;
+}
+
+footer a {
+    font-size: 1.5rem;
+    margin: 0 10px;
+    color: white;
+    transition: transform 0.3s;
+}
+
+footer a:hover {
+    transform: scale(1.2);
+}

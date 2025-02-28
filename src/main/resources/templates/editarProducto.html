@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- PAGINA WEB  SOLO PARA ADMINSITRADORES-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/Img/Logo.png" type="image/x-icon">
+    <title>Editar Productos</title>
+    <link rel="shortcut icon" href="/Img/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bahnschrift+SemiBold:wght@400;700&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-light"style="font-family: Franklin Gothic;"  >
+    <style>
+        /* Estilo adicional para hacer que los elementos del dropdown sean más grandes */
+        .dropdown-item {
+            padding: 10px 10px;
+            /* Espaciado adicional para mayor área de clic */
+        }
+
+        .dropdown-toggle {
+            font-size: 1.2rem;
+            /* Aumenta el tamaño de la fuente del enlace */
+        }
+
+        .fas {
+            font-size: 1.2rem;
+            /* Aumenta el tamaño del ícono de usuario */
+        }
+    </style>
+    <!-- Menú de Navegación -->
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container-fluid">
+        <h1 class="navbar-brand text-light">
+            Abrazo<span class="text-warning" href="/">Culinario</span>
+        </h1>
+
+        <!-- Botón de colapso -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/indexadmin">
+                        <i class="fas fa-home text-white"></i>&nbsp;Inicio
+                    </a>
+                </li>
+                
+
+
+            </ul>
+
+      
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline" >
+                <li class="nav-item">
+                    <a class="nav-link" href="/listaclientes"><i class="fas fa-users-cog"></i>&nbsp;Lista Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listareservas"><i class="fas fa-glass-cheers"></i>&nbsp;Lista Reservas
+                        Online</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listaeventos"><i class="fas fa-calendar-alt"></i>&nbsp;Lista Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/agregarProducto"><i
+                            class="fas fa-utensils"></i>&nbsp;Nuevos Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/vistaPide"><i
+                            class="fas fa-utensils"></i>&nbsp;Vista del Pide Online</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active " href="/editarProducto"><i
+                            class="fas fa-edit"></i>&nbsp;Edicion de los Productos</a>
+                </li>
+            </ul>
+
+          <!-- Botones de usuario a la derecha, con margen -->
+          <ul class="navbar-nav me-5" sec:authorize="isAuthenticated()"> <!-- Cambié ms-auto por me-4 -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user" style="font-size: 1.5rem;"></i>&nbsp;Administrador
+                </a>
+                <ul class="dropdown-menu" style="font-size: 1.2rem;">
+                    
+                    <li><a class="dropdown-item  " href="/indexadmin">Inicio</a></li>
+                    
+                    <li class="nav-item">
+                        <form method="post" action="/logout">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-danger"
+                                style="font-size: 1.1rem; padding: 10px 14px;">
+                                <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Cerrar Sesión
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+            <!-- Botones para usuarios no logueados -->
+            <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                <li class="nav-item">
+                    <a class="btn btn-primary m-2" href="/registrate">
+                        <i class="fas fa-user-plus text-white"></i>&nbsp;Registrate
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-secondary m-2" href="/login">
+                        <i class="fas fa-sign-in-alt text-white"></i>&nbsp;Iniciar Sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+ <section>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Editar Producto</h1>
+
+        <!-- Formulario para editar el producto -->
+        <form action="@{/actualizarProducto}"method="post" th:object="${producto}">
+            <!-- Campo para el ID del producto (generalmente no se edita, solo lo pasas como parámetro) -->
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Campo para el pedido del producto -->
+            <div class="mb-3">
+                <label for="pedido" class="form-label">Pedido</label>
+                <input type="text" id="pedido" th:field="*{pedido}" class="form-control" required />
+            </div>
+
+            <!-- Campo para la descripción del producto -->
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <input type="text" id="descripcion" th:field="*{descripcion}" class="form-control" required />
+            </div>
+
+            <!-- Campo para el precio del producto -->
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="number" id="precio" th:field="*{precio}" class="form-control" required />
+            </div>
+
+            <!-- Campo para la categoría del producto -->
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <input type="text" id="categoria" th:field="*{categoria}" class="form-control" required />
+            </div>
+
+            <!-- Botón de actualización -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+            </div>
+        </form>
+
+        <!-- Enlace para volver a la lista de productos -->
+        <div class="text-center mt-3">
+            <a href="/vistaPide" class="btn btn-secondary">Volver a la lista de productos</a>
+        </div>
+    </div>
+    <div th:if="${success != null}">
+        <p th:if="${success}">Producto actualizado correctamente.</p>
+        <p th:if="${!success}">Hubo un error al actualizar el producto.</p>
+     </div>
+     
+
+ </section>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz4fnFO9c6R5eL8O3o6WrEZZa1P6G7zvZ5MCsL3E4P1uC0t6gu36deh8T7"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-1q9tI5B8heLC7zQMBtyz+H/5Ip3z7S8PqIHwb47z67wzQw4v1M4y3lM/8Kzp0K7G"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz4fnFO9c6R5eL8O3o6WrEZZa1P6G7zvZ5MCsL3E4P1uC0t6gu36deh8T7"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-1q9tI5B8heLC7zQMBtyz+H/5Ip3z7S8PqIHwb47z67wzQw4v1M4y3lM/8Kzp0K7G"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+<script>
+
+</script>
+<script>
+   
+</script>
+</body>
+</html>

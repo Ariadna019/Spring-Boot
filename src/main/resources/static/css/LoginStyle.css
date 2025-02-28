@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif; 
+    background-color: #f4f4f4; 
+    margin: 0; 
+    padding: 0; 
+    display: flex;     /* centra el contenido */
+    flex-direction: column;    /* alinea verticalmnte */
+    align-items: center;    /* centra horizontalmente */
+    height: 100vh;       /* altura completa de la ventana */
+}
+
+form {
+    background-color: #fff;     /* Ffondo para el formulario */
+    padding: 20px; 
+    border-radius: 5px; 
+    width: 350px;            /* ancho */
+    margin-top: 20px;        /* espacio superior */
+}
+
+
+h1 {
+    text-align: center; /* cnntra el texto */
+    color: #333; 
+    margin-bottom: 20px; /* spacio debjo d el título */
+}
+
+/* etiquetas email-contraseña*/
+label {
+    display: block;            /* se mustra como bloque */
+    margin-bottom: 5px;        /* espacio debajo de las etiquetas */
+    color: #555;
+}
+
+/* campos para ingresar email-contraseña */
+input[type="email"],
+input[type="password"] {
+    width: 100%;               /* ancho */
+    padding: 10px;              /* relleno interno */
+    margin-bottom: 25px;         /* espacio debajo de los campos */
+    border: 1px solid #ccc;      /* borde */
+    border-radius: 4px;             /* borde redondeados */
+    box-sizing: border-box;       /* incluir el padding y el borde ancho total */
+}
+
+/* boton iniciar sesion */
+button {
+    width: 100%;                    /* ancho */
+    padding: 10px;                 /* relleno interno */
+    background-color: #007bff;        /* color del boton */
+    color: white;                    /* color texto */
+    border: none;                      /* sin borde */
+    border-radius: 4px;               /* borde redondeado */
+    cursor: pointer;              /* cambiar el cursor al pasar el ratn */
+    font-size: 16px;             /* tamaño de lafuente */
+}
+
+/* pasar el raton sobre el boton */
+button:hover {
+    background-color: #0056b3;      /* color más oscuro al pasar el raton */
+}
+
+/* mensaje de error */
+p {
+    text-align: center; /* Centrar el texto */
+}

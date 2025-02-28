@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/Img/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/eventos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bahnschrift+SemiBold:wght@400;700&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Eventos</title>
+</head>
+<Style>
+    body {
+        font-family: 'Franklin Gothic'
+    }
+
+    input,
+    textarea {
+        transition: all 1.5s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+        box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+        padding: 1rem;
+        border-radius: 1rem;
+        border-color: #0056b3;
+
+    }
+
+    .form-control {
+        border-radius: 20px;
+        padding: 15px;
+        font-size: 1rem;
+        transition: background-color 1.5s ease, height 1.5s ease;
+    }
+
+    .form-range {
+        width: 100%;
+    }
+
+    .completed-field {
+        box-shadow: 0 0 15px rgba(229, 255, 0, 0.6);
+        border-color: #f8bfee;
+    }
+
+    .badge {
+        font-size: 1.2rem;
+        margin-left: 0.5rem;
+    }
+
+    .animate-button {
+        position: relative;
+        overflow: hidden;
+        transition: background-color 0.5s ease;
+    }
+
+    .animate-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: rgba(0, 123, 255, 0.5);
+        border-radius: 50%;
+        transition: transform 0.5s ease;
+        transform: translate(-50%, -50%) scale(0);
+        z-index: 0;
+    }
+
+    .animate-button:hover::before {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .animate-button:hover {
+        color: white;
+    }
+
+    .btn {
+        position: relative;
+        z-index: 1;
+    }
+
+    
+        /* Estilo adicional para hacer que los elementos del dropdown sean más grandes */
+        .dropdown-item { padding: 10px 10px; /* Espaciado adicional para mayor área de clic */}
+        .dropdown-toggle { font-size: 1.2rem; /* Aumenta el tamaño de la fuente del enlace */ }
+        .fas {    font-size: 1.2rem; /* Aumenta el tamaño del ícono de usuario */}
+        
+    
+</Style>
+
+<body
+    style="font-family: Bahnschrift SemiBold SemiConden; background-image: url('/Img/FondoEventos.jpeg'); background-repeat: no-repeat; background-size: cover;"
+    class="bg-opacity-75">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark" style="font-family: Franklin Gothic">
+        <div class="container-fluid">
+            <h1 class="navbar-brand text-light">
+                Abrazo<span class="text-warning" href="/">Culinario</span>
+            </h1>
+    
+                <!-- Botón de colapso -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="/">
+                                <i class="fas fa-home text-white"></i>&nbsp;Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/nosotros">
+                                <i class="fas fa-phone text-white"></i>&nbsp;Nosotros
+                            </a>
+                        </li>
+    
+                        
+                    </ul>
+    
+                    <!-- Botones para usuarios logueados -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-underline" sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/PideOnline"><i class="fas fa-utensils"></i>&nbsp;Pide Online</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  " href="/reservaonline"><i class="fas fa-calendar-alt"></i>&nbsp;Reserva Online</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/eventos"><i class="fas fa-glass-cheers"></i>&nbsp;Eventos</a>
+                        </li>
+                       
+                        
+                                                
+                            <li class="nav-item position-relative">
+                                <a class="nav-link  " href="/Cart">
+                                    <i class="fas fa-shopping-cart"></i>&nbsp;Mi Carrito
+                                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
+                                        0
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+
+                            </ul>
+
+
+                            <!-- Botones de usuario a la derecha, con margen -->
+                 <ul class="navbar-nav me-5" sec:authorize="isAuthenticated()"> <!-- Cambié ms-auto por me-4 -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user" style="font-size: 1.5rem;"></i>&nbsp;Usuario
+                        </a>
+                        <ul class="dropdown-menu" style="font-size: 1.2rem;">
+                            <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
+                            <li><a class="dropdown-item" href="/">Inicio</a></li>
+                           
+                                <form method="post" action="/logout">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-danger" style="font-size: 1.1rem; padding: 10px 15px;">
+                                        <i class="fas fa-sign-out-alt"></i>&nbsp;Cerrar Sesión
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                    <!-- Botones para usuarios no logueados -->
+                    <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="btn btn-primary m-2" href="/registrate">
+                                <i class="fas fa-user-plus text-white"></i>&nbsp;Registrate
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-secondary m-2" href="/login">
+                                <i class="fas fa-sign-in-alt text-white"></i>&nbsp;Iniciar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+ <!-- FIN DE BARRA DE NAVEGACION -->
+     <!-- Main Content -->
+     <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center text-white">
+                <h1 class="display-1">Haz que Tus Eventos Sean Mágicos con Nosotros</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center ">
+            <div class="col-md-6 p-4 rounded-5 bg-dark bg-opacity-75 text-white ">
+                <h2 class="mb-4">Cotiza tu evento</h2>
+                <p class="mb-4">Requerimos un mínimo de 20 personas para reservar un evento</p>
+
+                <div class="container mt-5">
+                    <form th:action="@{/eventos}" th:object="${evento}" method="post" id="eventosConsulta"
+                        class="needs-validation rounded-5 p-4 bg-light" novalidate>
+
+                        <div class="mb-3">
+                            <input id="nombreEvento" type="text" th:field="*{nombre}"
+                                class="form-control rounded-pill bg-light bg-opacity-75" placeholder="Nombre" required>
+                            <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input id="apellidoEvento" type="text" th:field="*{apellido}"
+                                class="form-control rounded-pill bg-light bg-opacity-75" placeholder="Apellido"
+                                required>
+                            <div class="invalid-feedback">Por favor, ingresa tu apellido.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input id="emailEvento" type="email" th:field="*{email}"
+                                class="form-control rounded-pill bg-light bg-opacity-75" placeholder="Email" required>
+                            <div class="invalid-feedback">Por favor, ingresa un email válido.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input id="telEvento" type="tel" th:field="*{telefono}"
+                                class="form-control rounded-pill bg-light bg-opacity-75" placeholder="Teléfono"
+                                required>
+                            <div class="invalid-feedback">Por favor, ingresa tu número de teléfono.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input id="dateEvento" type="date" th:field="*{fecha}"
+                                class="form-control rounded-pill bg-light bg-opacity-75" placeholder="Fecha" required>
+                            <div class="invalid-feedback">Por favor, selecciona una fecha.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input id="timeEvento" type="time" th:field="*{hora}"
+                                class="form-control rounded-pill bg-light bg-opacity-75" placeholder="Hora" required>
+                            <div class="invalid-feedback">Por favor, selecciona una hora.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="numberEvento" class="form-label text-black">Selecciona número de
+                                personas</label>
+                            <input id="numberEvento" th:field="*{numeroPersonas}" type="range" min="20" max="200"
+                                value="20" class="form-range" required>
+                            <span id="personasCount" class="badge bg-primary p-2 rounded-3">20</span>
+                            <div class="invalid-feedback">El número mínimo es 20 personas y máximo 200.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <textarea id="comentariosEvento" th:field="*{comentarios}"
+                                class="form-control rounded-4 bg-light bg-opacity-75"
+                                placeholder="Comentarios"></textarea>
+                        </div>
+
+                        <button type="submit" id="submitBtn"
+                            class="btn btn-primary w-100 rounded-pill animate-button">Enviar</button>
+                    </form>
+
+
+
+                    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">¡Éxito!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Tu evento ha sido registrado exitosamente.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+
+                </div>
+            </div>
+    </main>
+  
+
+    <footer>
+        <div class="mb-3">&copy; 2024 Abrazo Culinario. Todos los derechos reservados.</div>
+        <div>Síguenos en redes sociales</div>
+        <a href="https://facebook.com" class="bi bi-facebook" ></a>
+        <a href="https://twitter.com" class="bi bi-twitter" ></a>
+        <a href="https://instagram.com" class="bi bi-instagram" ></a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+        <script src="/js/eventos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>  
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const form = document.getElementById("eventosConsulta");
+        
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault(); // Evitar el envío automático del formulario
+        
+                    Swal.fire({
+                        title: "¡Formulario enviado!",
+                        text: "Tu solicitud ha sido enviada con éxito. Nos pondremos en contacto contigo pronto.",
+                        icon: "success",
+                        confirmButtonText: "Aceptar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Si el usuario hace clic en "Aceptar", enviar el formulario de forma manual
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        </script>
+        
+</body>
+
+</html>
